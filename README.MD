@@ -67,7 +67,9 @@ Dataset yang digunakan adalah **Anime Recommendations Database** dari Kaggle: [A
   - 10: 955,715
 - **Visualisasi**:
   - ![Distribution of Anime Ratings (excluding -1)](images/image1.png)
+  Histogram ini menunjukkan distribusi rating pengguna (dari 1 hingga 10, tanpa rating -1). Sebagian besar rating terkonsentrasi pada nilai 7 hingga 9, dengan puncak tertinggi di rating 8. Ini mengindikasikan bahwa pengguna cenderung memberikan rating tinggi untuk anime yang mereka tonton, sementara rating rendah (1-5) jauh lebih sedikit.
   - ![Top 15 Most Frequent Anime Genres](images/image2.png)
+  Bar plot ini menampilkan 15 genre anime yang paling sering muncul. Genre "Comedy" mendominasi dengan lebih dari 4,000 kemunculan, diikuti oleh "Action" dan "Adventure". Genre seperti "Hentai" dan "Mecha" memiliki frekuensi lebih rendah, menunjukkan bahwa dataset ini lebih banyak berisi anime dengan genre ringan dan populer.
 
 ## Data Preparation
 Berikut adalah tahapan persiapan data yang dilakukan:
