@@ -184,4 +184,3 @@ def get_collaborative_recommendations(user_id, num_recommendations=10, df_anime=
 _Catatan:_  
 - Visualisasi seperti "Distribution of Anime Ratings (excluding -1)" dan "Top 15 Most Frequent Anime Genres" telah disertakan sebagai gambar.  
 - Untuk menjalankan proyek, instal library: `pip install pandas numpy scikit-learn scikit-surprise matplotlib seaborn`, unduh dataset dari [Kaggle](https://www.kaggle.com/datasets/CooperUnion/anime-recommendations-database), simpan di folder `dataset/`, dan jalankan kode di Jupyter Notebook.
-```
