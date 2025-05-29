@@ -1,4 +1,3 @@
-```markdown
 # Laporan Proyek Machine Learning - Ghani Husna
 
 ## Project Overview
@@ -91,7 +90,6 @@ Berikut adalah tahapan persiapan data yang dilakukan:
   Mousou Dairinin     Drama, Mystery, Police, Psychological, Superna...  TV      7.74 0.967703
   Higurashi no Naku Koro ni Kai Mystery, Psychological, Supernatural, Thriller  TV      8.41 0.879514
   ...
-  ```
 - **Kelebihan**:
   - Tidak memerlukan data rating pengguna lain (*cold-start* friendly).
   - Rekomendasi transparan dan mudah dijelaskan.
