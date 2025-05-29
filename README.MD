@@ -1,4 +1,4 @@
-# Laporan Proyek Machine Learning - [Nama Anda]
+# Laporan Proyek Machine Learning - Ghani Husna Daramwan
 
 ## Project Overview
 
