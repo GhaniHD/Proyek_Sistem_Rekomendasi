@@ -1,51 +1,52 @@
 ```markdown
-# Proyek Sistem Rekomendasi Anime
+# Laporan Proyek Machine Learning - [Nama Anda]
 
-## Daftar Isi
-- [Pendahuluan](#pendahuluan)
-- [Pemahaman Bisnis](#pemahaman-bisnis)
-  - [Pernyataan Masalah](#pernyataan-masalah)
-  - [Tujuan Proyek](#tujuan-proyek)
-  - [Pendekatan Solusi](#pendekatan-solusi)
-- [Pemahaman Data](#pemahaman-data)
-- [Persiapan Data](#persiapan-data)
-- [Pemodelan](#pemodelan)
-  - [Content-based Filtering](#content-based-filtering)
-  - [Collaborative Filtering](#collaborative-filtering)
-- [Evaluasi](#evaluasi)
-- [Cara Menjalankan Proyek](#cara-menjalankan-proyek)
+## Project Overview
 
-## Pendahuluan
-Di era digital, anime telah menjadi salah satu bentuk hiburan paling populer secara global. Dengan ribuan judul yang tersedia, pengguna sering menghadapi *overload informasi*, kesulitan menemukan anime yang sesuai dengan selera mereka. Proyek ini bertujuan membangun sistem rekomendasi anime yang personal dan efektif untuk membantu pengguna menemukan anime relevan berdasarkan preferensi mereka, baik dari karakteristik anime (genre, tipe) maupun perilaku tontonan pengguna lain. Sistem ini meningkatkan pengalaman pengguna di platform streaming atau basis data anime, meningkatkan *engagement* dan kepuasan pengguna.
+Di era digital yang didominasi oleh konten hiburan, anime telah menjadi salah satu bentuk media yang paling populer secara global. Dengan ribuan judul yang tersedia di berbagai platform, pengguna seringkali menghadapi fenomena *overload informasi*, di mana menemukan anime baru yang sesuai dengan selera pribadi menjadi tantangan tersendiri. Fenomena ini diperparah dengan pertumbuhan eksponensial dalam produksi anime, menjadikannya semakin sulit bagi penggemar untuk menjelajahi dan menemukan judul-judul yang menarik.
+
+Proyek ini bertujuan untuk mengatasi masalah ini dengan membangun sistem rekomendasi anime yang personal dan efektif. Sistem ini akan membantu pengguna menemukan anime yang relevan berdasarkan preferensi mereka, baik dari sisi karakteristik anime (genre, tipe) maupun dari perilaku tontonan pengguna lain. Sistem rekomendasi sangat vital dalam meningkatkan pengalaman pengguna pada platform streaming anime atau situs basis data anime, karena dapat secara signifikan meningkatkan *engagement* pengguna dan memperpanjang durasi mereka dalam menjelajahi konten. Penelitian menunjukkan bahwa sistem rekomendasi yang akurat dapat meningkatkan konsumsi konten dan kepuasan pengguna [1].
 
 **Referensi**:  
 [1] J. L. Herlocker, J. A. Konstan, A. Borchers, and J. Riedl, "An algorithmic framework for performing collaborative filtering," in *Proceedings of the 22nd annual international ACM SIGIR conference on Research and development in information retrieval*, 1999, pp. 230-237.
 
-## Pemahaman Bisnis
+## Business Understanding
 
-### Pernyataan Masalah
-- **Overload Informasi**: Pengguna kesulitan menemukan anime baru di tengah banyaknya pilihan, menyebabkan kelelahan keputusan dan mengurangi kepuasan.
-- **Kurangnya Personalisasi**: Banyak platform gagal memberikan rekomendasi yang sangat personal, sehingga pengguna mungkin beralih ke platform lain.
+### Problem Statements
+- **Overload Informasi**: Pengguna kesulitan menemukan anime baru yang relevan dan menarik di tengah jutaan pilihan yang tersedia di berbagai platform, yang dapat menyebabkan kelelahan keputusan dan mengurangi kepuasan pengguna.
+- **Kurangnya Personalisasi**: Platform penyedia anime seringkali gagal menyediakan rekomendasi yang sangat personal, yang dapat menyebabkan pengguna merasa tidak mendapatkan nilai maksimal dari layanan dan mungkin beralih ke platform lain.
 
-### Tujuan Proyek
-- **Mempermudah Penemuan Konten**: Merekomendasikan anime relevan secara efisien, mengurangi waktu pencarian.
-- **Meningkatkan Kepuasan Pengguna**: Menyediakan rekomendasi personal dan akurat untuk pengalaman pengguna yang lebih baik.
+### Goals
+- **Mempermudah Penemuan Konten**: Membangun sistem yang mampu merekomendasikan anime yang sangat relevan dan menarik kepada pengguna secara efisien, mengurangi waktu dan usaha yang dibutuhkan untuk menemukan konten baru.
+- **Meningkatkan Kepuasan Pengguna**: Menyediakan rekomendasi yang personal dan akurat, sehingga meningkatkan pengalaman pengguna secara keseluruhan dan mendorong mereka untuk menjelajahi lebih banyak konten di platform.
 
-### Pendekatan Solusi
-Proyek ini mengimplementasikan dua pendekatan:
-1. **Content-based Filtering**: Merekomendasikan anime berdasarkan kemiripan atribut (genre, tipe) menggunakan *Cosine Similarity* pada fitur genre yang diubah ke representasi numerik dengan *TF-IDF*.
-2. **Collaborative Filtering**: Merekomendasikan anime berdasarkan pola rating pengguna serupa menggunakan *Singular Value Decomposition (SVD)*.
+### Solution Statements
+Untuk mencapai tujuan di atas, proyek ini mengimplementasikan dua pendekatan sistem rekomendasi:
+1. **Content-based Filtering**: Merekomendasikan anime berdasarkan kemiripan atribut intrinsik (genre, tipe) menggunakan *Cosine Similarity* pada fitur genre yang diubah menjadi representasi numerik dengan *TF-IDF*.
+2. **Collaborative Filtering**: Merekomendasikan anime berdasarkan pola rating pengguna serupa menggunakan *Singular Value Decomposition (SVD)*, sebuah teknik *matrix factorization* untuk prediksi rating.
 
-## Pemahaman Data
-Dataset yang digunakan adalah **Anime Recommendations Database** dari Kaggle: [Anime Recommendations Database](https://www.kaggle.com/datasets/CooperUnion/anime-recommendations-database). Terdiri dari dua file CSV:
+## Data Understanding
+Dataset yang digunakan adalah **Anime Recommendations Database** dari Kaggle: [Anime Recommendations Database](https://www.kaggle.com/datasets/CooperUnion/anime-recommendations-database). Dataset ini terdiri dari dua file CSV: `anime.csv` dan `rating.csv`.
+
+**Informasi Dataset**:
 - **anime.csv**:
   - Jumlah data: 12,294 entri.
-  - Kolom: `anime_id` (int64), `name` (object), `genre` (object, 62 null), `type` (object, 25 null), `episodes` (object), `rating` (float64, 230 null), `members` (int64).
+  - Kolom:
+    - `anime_id`: ID unik untuk setiap anime (int64).
+    - `name`: Nama anime (object).
+    - `genre`: Genre anime (object, 62 nilai null).
+    - `type`: Tipe anime (object, 25 nilai null).
+    - `episodes`: Jumlah episode (object).
+    - `rating`: Rata-rata rating komunitas (float64, 230 nilai null).
+    - `members`: Jumlah anggota komunitas yang menambahkan anime ke daftar mereka (int64).
 - **rating.csv**:
   - Jumlah data: 7,813,737 entri.
-  - Kolom: `user_id` (int64), `anime_id` (int64), `rating` (int64, -1 hingga 10, -1 menunjukkan "ditonton tapi tidak dinilai").
+  - Kolom:
+    - `user_id`: ID unik pengguna (int64).
+    - `anime_id`: ID anime yang diberi rating (int64).
+    - `rating`: Rating pengguna (int64, -1 hingga 10, -1 menunjukkan "ditonton tapi tidak dinilai").
 
-**Insight dari Eksplorasi Data**:
+**Exploratory Data Analysis**:
 - **Jumlah Genre Unik**: 43 genre.
 - **Tipe Anime**:
   - TV: 3,787
@@ -54,32 +55,34 @@ Dataset yang digunakan adalah **Anime Recommendations Database** dari Kaggle: [A
   - Special: 1,676
   - ONA: 659
   - Music: 488
-- **Distribusi Rating Pengguna** (tanpa -1): Puncak di rating 7, 8, 9, dengan rating 8 paling sering. Rating rendah (1-5) jarang, menunjukkan kecenderungan pengguna memberikan rating tinggi.
-- **Penggabungan Awal**: Gabungan `rating_df` dan `anime_df` menghasilkan 7,813,727 baris dan 9 kolom.
+- **Distribusi Rating Pengguna** (tanpa -1): Rating terkonsentrasi pada 7, 8, 9, dengan puncak di 8. Rating rendah (1-5) jarang, menunjukkan kecenderungan pengguna memberikan rating tinggi.
+- **Penggabungan Awal**: Gabungan `rating_df` dan `anime_df` berdasarkan `anime_id` menghasilkan 7,813,727 baris dan 9 kolom.
 
-## Persiapan Data
-1. **Penanganan Missing Values**:
+## Data Preparation
+Berikut adalah tahapan persiapan data yang dilakukan:
+1. **Penanganan Missing Values pada anime_df**:
    - Kolom `genre` (62 null) diisi dengan 'Unknown'.
    - Kolom `rating` (230 null) diisi dengan rata-rata rating.
-   - **Alasan**: Mencegah error dan bias pada model.
-2. **Penanganan Rating -1**:
+   - **Alasan**: Mencegah error atau bias pada model. 'Unknown' menjaga informasi kategori, dan rata-rata rating mempertahankan distribusi data.
+2. **Penanganan Rating -1 pada rating_df**:
    - Baris dengan rating -1 dihapus (sisa 6,337,239 baris).
    - **Alasan**: Rating -1 tidak memberikan informasi preferensi untuk *collaborative filtering*.
-3. **Penanganan Duplikat**:
+3. **Penanganan Duplikat pada anime_df**:
    - Duplikat berdasarkan `anime_id` dihapus (tidak ada duplikat ditemukan).
-   - **Alasan**: Menghindari redundansi.
+   - **Alasan**: Menghindari redundansi dan kesalahan perhitungan.
 4. **Penggabungan Dataset**:
-   - `rating_df` dan `anime_df` digabung berdasarkan `anime_id`, menghasilkan `merged_df` (6,337,239 baris, 9 kolom).
-5. **Pembersihan Kolom Genre**:
-   - Ganti koma dengan spasi pada kolom `genre` dan simpan di `genre_cleaned`.
+   - `rating_df` digabungkan dengan `anime_df` berdasarkan `anime_id`, dengan suffix `_user` dan `_anime` untuk kolom rating (hasil: 6,337,239 baris, 9 kolom).
+   - **Alasan**: Menghubungkan rating pengguna dengan detail anime untuk sistem rekomendasi.
+5. **Pembersihan Kolom Genre untuk TF-IDF**:
+   - Kolom `genre` dibersihkan dengan mengganti koma menjadi spasi, disimpan di `genre_cleaned`.
    - **Alasan**: Memastikan *TfidfVectorizer* memproses genre sebagai token terpisah.
 
-## Pemodelan
+## Modeling
 ### Content-based Filtering
 - **Algoritma**: *Cosine Similarity*.
 - **Cara Kerja**:
   - *TF-IDF Vectorization*: Kolom `genre_cleaned` diubah menjadi matriks *TF-IDF* (12,294 anime, 43 fitur genre).
-  - *Cosine Similarity*: Matriks kemiripan kosinus dihitung untuk setiap pasangan anime (12,294 x 12,294).
+  - *Cosine Similarity*: Menghitung kemiripan kosinus antar anime (matriks 12,294 x 12,294).
   - **Rekomendasi**: Anime dengan skor kemiripan tertinggi direkomendasikan.
 - **Contoh Rekomendasi (Death Note)**:
   ```plaintext
@@ -94,7 +97,7 @@ Dataset yang digunakan adalah **Anime Recommendations Database** dari Kaggle: [A
   - Rekomendasi transparan dan mudah dijelaskan.
   - Merekomendasikan item yang belum di-rating.
 - **Kekurangan**:
-  - Over-specialization, kurang beragam.
+  - *Over-specialization*, kurang beragam.
   - Memerlukan fitur item yang kaya.
 
 ### Collaborative Filtering
@@ -119,14 +122,14 @@ Dataset yang digunakan adalah **Anime Recommendations Database** dari Kaggle: [A
   - Masalah *sparsity* pada matriks rating.
   - Sulit menjelaskan rekomendasi.
 
-## Evaluasi
+## Evaluation
 ### Metrik Evaluasi
 1. **RMSE (Root Mean Squared Error)**:
-   - Mengukur rata-rata magnitudo error prediksi rating.
-   - Formula: `RMSE = sqrt(1/N * Σ(yi - ŷi)²)`
+   - **Formula**: `RMSE = sqrt(1/N * Σ(yi - ŷi)²)`
+   - **Cara Kerja**: Mengukur rata-rata magnitudo error antara rating aktual dan prediksi. Memberikan bobot lebih pada error besar.
 2. **MAE (Mean Absolute Error)**:
-   - Mengukur rata-rata nilai absolut error prediksi.
-   - Formula: `MAE = 1/N * Σ|yi - ŷi|`
+   - **Formula**: `MAE = 1/N * Σ|yi - ŷi|`
+   - **Cara Kerja**: Mengukur rata-rata nilai absolut error, lebih resisten terhadap *outlier*.
 
 ### Hasil Evaluasi
 - **Collaborative Filtering (SVD)**:
@@ -145,27 +148,15 @@ Dataset yang digunakan adalah **Anime Recommendations Database** dari Kaggle: [A
   - Evaluasi kualitatif: Rekomendasi untuk *Death Note* relevan (genre *Mystery*, *Psychological*, *Thriller*).
   - **Kesimpulan**: Efektif mengidentifikasi kemiripan genre.
 
-**Kesimpulan Umum**: SVD memberikan prediksi rating akurat, sementara *Content-based Filtering* menghasilkan rekomendasi tematik yang relevan. Kedua pendekatan saling melengkapi.
+**Kesimpulan Umum**: SVD memberikan prediksi rating akurat, sementara *Content-based Filtering* menghasilkan rekomendasi tematik yang relevan. Kedua pendekatan saling melengkapi untuk sistem rekomendasi anime yang komprehensif.
 
-## Cara Menjalankan Proyek
-1. **Unduh Dataset**:
-   - Unduh `anime.csv` dan `rating.csv` dari [Kaggle](https://www.kaggle.com/datasets/CooperUnion/anime-recommendations-database).
-2. **Siapkan Lingkungan Python**:
-   - Gunakan Python 3.7+.
-   - Instal library:
-     ```bash
-     pip install pandas numpy scikit-learn scikit-surprise matplotlib seaborn
-     ```
-3. **Tempatkan File Dataset**:
-   - **Google Colab**: Unggah file ke Google Drive (misalnya, folder `dataset_anime`), sesuaikan `data_path` di kode.
-   - **Lokal**: Simpan file CSV di direktori yang sama dengan file `.ipynb`, atau sesuaikan `data_path`.
-4. **Jalankan Jupyter Notebook**:
-   - Buka Jupyter Notebook/JupyterLab.
-   - Navigasi ke direktori proyek.
-   - Buka file `.ipynb` dan jalankan setiap cell secara berurutan.
+**---Ini adalah bagian akhir laporan---**
+
+_Catatan:_  
+- Anda dapat menambahkan visualisasi distribusi rating dengan menyisipkan gambar menggunakan `![Distribution](path/to/image.png)` di Markdown, jika tersedia.  
+- Untuk menjalankan proyek, ikuti langkah-langkah berikut:  
+  1. Unduh dataset dari [Kaggle](https://www.kaggle.com/datasets/CooperUnion/anime-recommendations-database).  
+  2. Instal Python 3.7+ dan library: `pip install pandas numpy scikit-learn scikit-surprise matplotlib seaborn`.  
+  3. Simpan `anime.csv` dan `rating.csv` di direktori proyek atau Google Drive, sesuaikan `data_path` di kode.  
+  4. Jalankan Jupyter Notebook dan eksekusi setiap cell secara berurutan.
 ```
-
-**Catatan**:
-- File `README.md` ini mengikuti struktur yang diminta, dengan penyesuaian untuk kejelasan dan format Markdown yang rapi.
-- Pastikan semua link (misalnya, Kaggle) aktif dan sesuai saat digunakan.
-- Jika ada visualisasi seperti "Distribution of Anime Ratings", Anda dapat menambahkan gambar ke folder proyek dan menyisipkannya di README dengan sintaks `![Distribution](path/to/image.png)`. Namun, karena tidak ada file gambar yang disediakan, bagian ini tidak dimasukkan.
