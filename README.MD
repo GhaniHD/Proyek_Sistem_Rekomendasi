@@ -156,10 +156,10 @@ def get_collaborative_recommendations(user_id, num_recommendations=10, df_anime=
 ## Evaluation
 ### Metrik Evaluasi
 1. **RMSE (Root Mean Squared Error)**:
-   - **Formula**: `RMSE = sqrt(1/N * Σ(yi - ŷi)²)`
+   - **Formula**: ![alt text](images/image3.png)
    - **Cara Kerja**: Mengukur rata-rata magnitudo error antara rating aktual dan prediksi. Memberikan bobot lebih pada error besar.
 2. **MAE (Mean Absolute Error)**:
-   - **Formula**: `MAE = 1/N * Σ|yi - ŷi|`
+   - **Formula**: ![alt text](images/image.png)
    - **Cara Kerja**: Mengukur rata-rata nilai absolut error, lebih resisten terhadap *outlier*.
 
 ### Hasil Evaluasi
