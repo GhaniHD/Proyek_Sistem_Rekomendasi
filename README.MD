@@ -66,8 +66,8 @@ Dataset yang digunakan adalah **Anime Recommendations Database** dari Kaggle: [A
   - 9: 1,254,096
   - 10: 955,715
 - **Visualisasi**:
-  - ![Distribution of Anime Ratings (excluding -1)](attachment://Distribution_of_Anime_Ratings_excluding_-1.png)
-  - ![Top 15 Most Frequent Anime Genres](attachment://Top_15_Most_Frequent_Anime_Genres.png)
+  - ![Distribution of Anime Ratings (excluding -1)](images/image1.png)
+  - ![Top 15 Most Frequent Anime Genres](images/image2.png)
 
 ## Data Preparation
 Berikut adalah tahapan persiapan data yang dilakukan:
