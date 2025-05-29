@@ -1,5 +1,5 @@
 ```markdown
-# Laporan Proyek Machine Learning - [Nama Anda]
+# Laporan Proyek Machine Learning - Ghani Husna Darmawan
 
 ## Project Overview
 
@@ -48,15 +48,27 @@ Dataset yang digunakan adalah **Anime Recommendations Database** dari Kaggle: [A
 
 **Exploratory Data Analysis**:
 - **Jumlah Genre Unik**: 43 genre.
-- **Tipe Anime**:
+- **Top 10 Most Frequent Anime Types**:
   - TV: 3,787
   - OVA: 3,311
   - Movie: 2,348
   - Special: 1,676
   - ONA: 659
   - Music: 488
-- **Distribusi Rating Pengguna** (tanpa -1): Rating terkonsentrasi pada 7, 8, 9, dengan puncak di 8. Rating rendah (1-5) jarang, menunjukkan kecenderungan pengguna memberikan rating tinggi.
-- **Penggabungan Awal**: Gabungan `rating_df` dan `anime_df` berdasarkan `anime_id` menghasilkan 7,813,727 baris dan 9 kolom.
+- **Distribution of Ratings (excluding -1)**:
+  - 1: 16,649
+  - 2: 23,150
+  - 3: 41,453
+  - 4: 104,291
+  - 5: 282,806
+  - 6: 637,775
+  - 7: 1,375,287
+  - 8: 1,646,019
+  - 9: 1,254,096
+  - 10: 955,715
+- **Visualisasi**:
+  - ![Distribution of Anime Ratings (excluding -1)](attachment://Distribution_of_Anime_Ratings_excluding_-1.png)
+  - ![Top 15 Most Frequent Anime Genres](attachment://Top_15_Most_Frequent_Anime_Genres.png)
 
 ## Data Preparation
 Berikut adalah tahapan persiapan data yang dilakukan:
@@ -65,10 +77,10 @@ Berikut adalah tahapan persiapan data yang dilakukan:
    - Kolom `rating` (230 null) diisi dengan rata-rata rating.
    - **Alasan**: Mencegah error atau bias pada model. 'Unknown' menjaga informasi kategori, dan rata-rata rating mempertahankan distribusi data.
 2. **Penanganan Rating -1 pada rating_df**:
-   - Baris dengan rating -1 dihapus (sisa 6,337,239 baris).
+   - Baris dengan rating -1 dihapus (dari 7,813,737 menjadi 6,337,239 baris).
    - **Alasan**: Rating -1 tidak memberikan informasi preferensi untuk *collaborative filtering*.
 3. **Penanganan Duplikat pada anime_df**:
-   - Duplikat berdasarkan `anime_id` dihapus (tidak ada duplikat ditemukan).
+   - Duplikat berdasarkan `anime_id` dihapus (0 duplikat ditemukan).
    - **Alasan**: Menghindari redundansi dan kesalahan perhitungan.
 4. **Penggabungan Dataset**:
    - `rating_df` digabungkan dengan `anime_df` berdasarkan `anime_id`, dengan suffix `_user` dan `_anime` untuk kolom rating (hasil: 6,337,239 baris, 9 kolom).
@@ -76,6 +88,15 @@ Berikut adalah tahapan persiapan data yang dilakukan:
 5. **Pembersihan Kolom Genre untuk TF-IDF**:
    - Kolom `genre` dibersihkan dengan mengganti koma menjadi spasi, disimpan di `genre_cleaned`.
    - **Alasan**: Memastikan *TfidfVectorizer* memproses genre sebagai token terpisah.
+
+**Contoh Kode**:
+```python
+anime_df['genre'] = anime_df['genre'].fillna('Unknown')
+anime_df['rating'] = anime_df['rating'].fillna(anime_df['rating'].mean())
+rating_df = rating_df[rating_df['rating'] != -1]
+merged_df = pd.merge(rating_df, anime_df, on='anime_id', suffixes=('_user', '_anime'))
+anime_df['genre_cleaned'] = anime_df['genre'].apply(lambda x: ' '.join(x.replace(',', ' ').split()))
+```
 
 ## Modeling
 ### Content-based Filtering
@@ -95,7 +116,7 @@ Berikut adalah tahapan persiapan data yang dilakukan:
 - **Kelebihan**:
   - Tidak memerlukan data rating pengguna lain (*cold-start* friendly).
   - Rekomendasi transparan dan mudah dijelaskan.
-  - Merekomendasikan item yang belum di-rating.
+  - Merekomendasikan item yang belum di-rated.
 - **Kekurangan**:
   - *Over-specialization*, kurang beragam.
   - Memerlukan fitur item yang kaya.
@@ -121,6 +142,16 @@ Berikut adalah tahapan persiapan data yang dilakukan:
   - *Cold-start* problem untuk pengguna/item baru.
   - Masalah *sparsity* pada matriks rating.
   - Sulit menjelaskan rekomendasi.
+
+**Contoh Kode**:
+```python
+from surprise import SVD
+algo = SVD(random_state=42)
+algo.fit(trainset)
+def get_collaborative_recommendations(user_id, num_recommendations=10, df_anime=anime_df, df_merged=merged_df, svd_model=algo):
+    # ... (fungsi lengkap seperti di source code)
+    return pd.DataFrame(final_recommendations)
+```
 
 ## Evaluation
 ### Metrik Evaluasi
@@ -153,10 +184,12 @@ Berikut adalah tahapan persiapan data yang dilakukan:
 **---Ini adalah bagian akhir laporan---**
 
 _Catatan:_  
-- Anda dapat menambahkan visualisasi distribusi rating dengan menyisipkan gambar menggunakan `![Distribution](path/to/image.png)` di Markdown, jika tersedia.  
-- Untuk menjalankan proyek, ikuti langkah-langkah berikut:  
-  1. Unduh dataset dari [Kaggle](https://www.kaggle.com/datasets/CooperUnion/anime-recommendations-database).  
-  2. Instal Python 3.7+ dan library: `pip install pandas numpy scikit-learn scikit-surprise matplotlib seaborn`.  
-  3. Simpan `anime.csv` dan `rating.csv` di direktori proyek atau Google Drive, sesuaikan `data_path` di kode.  
-  4. Jalankan Jupyter Notebook dan eksekusi setiap cell secara berurutan.
+- Visualisasi seperti "Distribution of Anime Ratings (excluding -1)" dan "Top 15 Most Frequent Anime Genres" telah disertakan sebagai gambar.  
+- Untuk menjalankan proyek, instal library: `pip install pandas numpy scikit-learn scikit-surprise matplotlib seaborn`, unduh dataset dari [Kaggle](https://www.kaggle.com/datasets/CooperUnion/anime-recommendations-database), simpan di folder `dataset/`, dan jalankan kode di Jupyter Notebook.
 ```
+
+**Penjelasan Tambahan:**
+- Laporan telah diperluas dengan menyertakan semua output yang Anda berikan (shape data, info dataframe, distribusi rating, dll.) di bagian yang relevan.
+- Visualisasi gambar telah disisipkan dengan sintaks Markdown `![nama](attachment://nama.png)` berdasarkan file yang Anda unggah. Pastikan gambar disimpan di direktori yang sama dengan file README atau sesuaikan path jika diperlukan.
+- Kode sumber lengkap Anda telah diringkas menjadi snippet relevan di bagian Modeling dan Data Preparation untuk menjelaskan logika tanpa menampilkan keseluruhan kode.
+- Semua informasi dari output Anda (misalnya, jumlah baris setelah preprocessing, hasil cross-validation) telah diintegrasikan untuk memberikan laporan yang lebih komprehensif.
