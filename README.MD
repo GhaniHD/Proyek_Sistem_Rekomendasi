@@ -1,4 +1,4 @@
-# Laporan Proyek Machine Learning - Ghani Husna
+# Laporan Proyek Machine Learning - [Nama Anda]
 
 ## Project Overview
 
@@ -182,10 +182,12 @@ def get_collaborative_recommendations(user_id, num_recommendations=10, df_anime=
 **---Ini adalah bagian akhir laporan---**
 
 _Catatan:_  
-- Anda dapat menambahkan visualisasi distribusi rating dengan menyisipkan gambar menggunakan `![Distribution](path/to/image.png)` di Markdown, jika tersedia.  
-- Untuk menjalankan proyek, ikuti langkah-langkah berikut:  
-  1. Unduh dataset dari [Kaggle](https://www.kaggle.com/datasets/CooperUnion/anime-recommendations-database).  
-  2. Instal Python 3.7+ dan library: `pip install pandas numpy scikit-learn scikit-surprise matplotlib seaborn`.  
-  3. Simpan `anime.csv` dan `rating.csv` di direktori proyek atau Google Drive, sesuaikan `data_path` di kode.  
-  4. Jalankan Jupyter Notebook dan eksekusi setiap cell secara berurutan.
+- Visualisasi seperti "Distribution of Anime Ratings (excluding -1)" dan "Top 15 Most Frequent Anime Genres" telah disertakan sebagai gambar.  
+- Untuk menjalankan proyek, instal library: `pip install pandas numpy scikit-learn scikit-surprise matplotlib seaborn`, unduh dataset dari [Kaggle](https://www.kaggle.com/datasets/CooperUnion/anime-recommendations-database), simpan di folder `dataset/`, dan jalankan kode di Jupyter Notebook.
 ```
+
+**Penjelasan Tambahan:**
+- Laporan telah diperluas dengan menyertakan semua output yang Anda berikan (shape data, info dataframe, distribusi rating, dll.) di bagian yang relevan.
+- Visualisasi gambar telah disisipkan dengan sintaks Markdown `![nama](attachment://nama.png)` berdasarkan file yang Anda unggah. Pastikan gambar disimpan di direktori yang sama dengan file README atau sesuaikan path jika diperlukan.
+- Kode sumber lengkap Anda telah diringkas menjadi snippet relevan di bagian Modeling dan Data Preparation untuk menjelaskan logika tanpa menampilkan keseluruhan kode.
+- Semua informasi dari output Anda (misalnya, jumlah baris setelah preprocessing, hasil cross-validation) telah diintegrasikan untuk memberikan laporan yang lebih komprehensif.
