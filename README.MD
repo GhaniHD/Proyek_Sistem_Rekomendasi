@@ -181,15 +181,7 @@ def get_collaborative_recommendations(user_id, num_recommendations=10, df_anime=
 
 **Kesimpulan Umum**: SVD memberikan prediksi rating akurat, sementara *Content-based Filtering* menghasilkan rekomendasi tematik yang relevan. Kedua pendekatan saling melengkapi untuk sistem rekomendasi anime yang komprehensif.
 
-**---Ini adalah bagian akhir laporan---**
-
 _Catatan:_  
 - Visualisasi seperti "Distribution of Anime Ratings (excluding -1)" dan "Top 15 Most Frequent Anime Genres" telah disertakan sebagai gambar.  
 - Untuk menjalankan proyek, instal library: `pip install pandas numpy scikit-learn scikit-surprise matplotlib seaborn`, unduh dataset dari [Kaggle](https://www.kaggle.com/datasets/CooperUnion/anime-recommendations-database), simpan di folder `dataset/`, dan jalankan kode di Jupyter Notebook.
 ```
-
-**Penjelasan Tambahan:**
-- Laporan telah diperluas dengan menyertakan semua output yang Anda berikan (shape data, info dataframe, distribusi rating, dll.) di bagian yang relevan.
-- Visualisasi gambar telah disisipkan dengan sintaks Markdown `![nama](attachment://nama.png)` berdasarkan file yang Anda unggah. Pastikan gambar disimpan di direktori yang sama dengan file README atau sesuaikan path jika diperlukan.
-- Kode sumber lengkap Anda telah diringkas menjadi snippet relevan di bagian Modeling dan Data Preparation untuk menjelaskan logika tanpa menampilkan keseluruhan kode.
-- Semua informasi dari output Anda (misalnya, jumlah baris setelah preprocessing, hasil cross-validation) telah diintegrasikan untuk memberikan laporan yang lebih komprehensif.
