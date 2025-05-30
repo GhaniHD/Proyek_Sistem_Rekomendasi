@@ -1,14 +1,3 @@
-Saya akan mengedit laporan Anda berdasarkan saran yang diberikan sebelumnya untuk memenuhi kriteria penilaian pada kategori **Data Preparation** dan **Modeling & Results**. Perubahan yang dilakukan meliputi:
-
-1. Mengganti nama pada judul laporan menjadi "Ghani Husna Daramwan".
-2. Menyesuaikan urutan langkah-langkah Data Preparation agar konsisten dengan alur kerja di notebook (source code). Berdasarkan kode, urutan yang benar adalah: (1) Penanganan Missing Values, (2) Penanganan Duplikat, (3) Penanganan Rating -1, (4) Penggabungan Dataset, (5) Pembersihan Kolom Genre, (6) TF-IDF Vectorization.
-3. Memindahkan penjelasan TF-IDF Vectorization dari bagian Modeling ke Data Preparation sebagai langkah eksplisit, termasuk penjelasan bahwa ini adalah proses mengubah fitur teks menjadi representasi numerik.
-4. Menyederhanakan bagian Modeling untuk fokus pada penggunaan matriks TF-IDF dalam algoritma *Cosine Similarity* tanpa menjelaskan proses pembuatannya.
-5. Memperbaiki bagian Evaluasi dengan menghapus placeholder gambar untuk formula RMSE dan MAE, serta menggunakan representasi teks formula yang sesuai dengan format Markdown.
-
-Berikut adalah laporan yang telah direvisi:
-
-```markdown
 # Laporan Proyek Machine Learning - Ghani Husna Daramwan
 
 ## Project Overview
