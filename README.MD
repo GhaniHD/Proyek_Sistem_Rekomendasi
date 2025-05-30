@@ -176,10 +176,10 @@ def get_collaborative_recommendations(user_id, num_recommendations=10, df_anime=
 ## Evaluation
 ### Metrik Evaluasi
 1. **RMSE (Root Mean Squared Error)**:
-   - **Formula**: `RMSE = sqrt(1/N * Σ(yi - ŷi)²)`
+   - **Formula**: (images/image3.png)  
    - **Cara Kerja**: Mengukur rata-rata magnitudo error antara rating aktual dan prediksi. Memberikan bobot lebih pada error besar.
 2. **MAE (Mean Absolute Error)**:
-   - **Formula**: `MAE = 1/N * Σ|yi - ŷi|`
+   - **Formula**: (images/image.png)  
    - **Cara Kerja**: Mengukur rata-rata nilai absolut error, lebih resisten terhadap *outlier*.
 
 ### Hasil Evaluasi
@@ -200,8 +200,6 @@ def get_collaborative_recommendations(user_id, num_recommendations=10, df_anime=
   - **Kesimpulan**: Efektif mengidentifikasi kemiripan genre.
 
 **Kesimpulan Umum**: SVD memberikan prediksi rating akurat, sementara *Content-based Filtering* menghasilkan rekomendasi tematik yang relevan. Kedua pendekatan saling melengkapi untuk sistem rekomendasi anime yang komprehensif.
-
-**---Ini adalah bagian akhir laporan---**
 
 _Catatan:_  
 - Visualisasi seperti "Distribution of Anime Ratings (excluding -1)" dan "Top 15 Most Frequent Anime Genres" telah disertakan sebagai gambar.  
