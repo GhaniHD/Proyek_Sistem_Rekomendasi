@@ -1,3 +1,14 @@
+Saya akan mengedit laporan Anda berdasarkan saran yang diberikan sebelumnya untuk memenuhi kriteria penilaian pada kategori **Data Preparation** dan **Modeling & Results**. Perubahan yang dilakukan meliputi:
+
+1. Mengganti nama pada judul laporan menjadi "Ghani Husna Daramwan".
+2. Menyesuaikan urutan langkah-langkah Data Preparation agar konsisten dengan alur kerja di notebook (source code). Berdasarkan kode, urutan yang benar adalah: (1) Penanganan Missing Values, (2) Penanganan Duplikat, (3) Penanganan Rating -1, (4) Penggabungan Dataset, (5) Pembersihan Kolom Genre, (6) TF-IDF Vectorization.
+3. Memindahkan penjelasan TF-IDF Vectorization dari bagian Modeling ke Data Preparation sebagai langkah eksplisit, termasuk penjelasan bahwa ini adalah proses mengubah fitur teks menjadi representasi numerik.
+4. Menyederhanakan bagian Modeling untuk fokus pada penggunaan matriks TF-IDF dalam algoritma *Cosine Similarity* tanpa menjelaskan proses pembuatannya.
+5. Memperbaiki bagian Evaluasi dengan menghapus placeholder gambar untuk formula RMSE dan MAE, serta menggunakan representasi teks formula yang sesuai dengan format Markdown.
+
+Berikut adalah laporan yang telah direvisi:
+
+```markdown
 # Laporan Proyek Machine Learning - Ghani Husna Daramwan
 
 ## Project Overview
@@ -66,45 +77,64 @@ Dataset yang digunakan adalah **Anime Recommendations Database** dari Kaggle: [A
   - 9: 1,254,096
   - 10: 955,715
 - **Visualisasi**:
-  - ![Distribution of Anime Ratings (excluding -1)](images/image1.png)
-  Histogram ini menunjukkan distribusi rating pengguna (dari 1 hingga 10, tanpa rating -1). Sebagian besar rating terkonsentrasi pada nilai 7 hingga 9, dengan puncak tertinggi di rating 8. Ini mengindikasikan bahwa pengguna cenderung memberikan rating tinggi untuk anime yang mereka tonton, sementara rating rendah (1-5) jauh lebih sedikit.
-  - ![Top 15 Most Frequent Anime Genres](images/image2.png)
-  Bar plot ini menampilkan 15 genre anime yang paling sering muncul. Genre "Comedy" mendominasi dengan lebih dari 4,000 kemunculan, diikuti oleh "Action" dan "Adventure". Genre seperti "Hentai" dan "Mecha" memiliki frekuensi lebih rendah, menunjukkan bahwa dataset ini lebih banyak berisi anime dengan genre ringan dan populer.
+  - **Distribution of Anime Ratings (excluding -1)**:  
+    ![Distribution of Anime Ratings (excluding -1)](images/image1.png)  
+    Histogram ini menunjukkan distribusi rating pengguna (dari 1 hingga 10, tanpa rating -1). Sebagian besar rating terkonsentrasi pada nilai 7 hingga 9, dengan puncak tertinggi di rating 8. Ini mengindikasikan bahwa pengguna cenderung memberikan rating tinggi untuk anime yang mereka tonton, sementara rating rendah (1-5) jauh lebih sedikit.
+  - **Top 15 Most Frequent Anime Genres**:  
+    ![Top 15 Most Frequent Anime Genres](images/image2.png)  
+    Bar plot ini menampilkan 15 genre anime yang paling sering muncul. Genre "Comedy" mendominasi dengan lebih dari 4,000 kemunculan, diikuti oleh "Action" dan "Adventure". Genre seperti "Hentai" dan "Mecha" memiliki frekuensi lebih rendah, menunjukkan bahwa dataset ini lebih banyak berisi anime dengan genre ringan dan populer.
 
 ## Data Preparation
-Berikut adalah tahapan persiapan data yang dilakukan:
+Berikut adalah tahapan persiapan data yang dilakukan, sesuai dengan urutan pengerjaan di notebook:
+
 1. **Penanganan Missing Values pada anime_df**:
    - Kolom `genre` (62 null) diisi dengan 'Unknown'.
    - Kolom `rating` (230 null) diisi dengan rata-rata rating.
    - **Alasan**: Mencegah error atau bias pada model. 'Unknown' menjaga informasi kategori, dan rata-rata rating mempertahankan distribusi data.
-2. **Penanganan Rating -1 pada rating_df**:
-   - Baris dengan rating -1 dihapus (dari 7,813,737 menjadi 6,337,239 baris).
-   - **Alasan**: Rating -1 tidak memberikan informasi preferensi untuk *collaborative filtering*.
-3. **Penanganan Duplikat pada anime_df**:
+2. **Penanganan Duplikat pada anime_df**:
    - Duplikat berdasarkan `anime_id` dihapus (0 duplikat ditemukan).
    - **Alasan**: Menghindari redundansi dan kesalahan perhitungan.
+3. **Penanganan Rating -1 pada rating_df**:
+   - Baris dengan rating -1 dihapus (dari 7,813,737 menjadi 6,337,239 baris).
+   - **Alasan**: Rating -1 tidak memberikan informasi preferensi untuk *collaborative filtering*.
 4. **Penggabungan Dataset**:
    - `rating_df` digabungkan dengan `anime_df` berdasarkan `anime_id`, dengan suffix `_user` dan `_anime` untuk kolom rating (hasil: 6,337,239 baris, 9 kolom).
-   - **Alasan**: Menghubungkan rating pengguna dengan detail anime untuk sistem rekomendasi.
+   - **Alasan**: Menghubungkan rating penggunaGEST dengan detail anime untuk sistem rekomendasi.
 5. **Pembersihan Kolom Genre untuk TF-IDF**:
    - Kolom `genre` dibersihkan dengan mengganti koma menjadi spasi, disimpan di `genre_cleaned`.
    - **Alasan**: Memastikan *TfidfVectorizer* memproses genre sebagai token terpisah.
+6. **TF-IDF Vectorization untuk Content-based Filtering**:
+   - Kolom `genre_cleaned` diubah menjadi matriks *TF-IDF* menggunakan *TfidfVectorizer* (hasil: matriks 12,294 anime x 43 fitur genre).
+   - **Alasan**: Mengubah data teks (genre) menjadi representasi numerik agar dapat digunakan oleh algoritma *Cosine Similarity* untuk menghitung kemiripan antar anime.
 
 **Contoh Kode**:
 ```python
+# Penanganan missing values
 anime_df['genre'] = anime_df['genre'].fillna('Unknown')
 anime_df['rating'] = anime_df['rating'].fillna(anime_df['rating'].mean())
+
+# Penanganan duplikat
+anime_df.drop_duplicates(subset='anime_id', inplace=True)
+
+# Penanganan rating -1
 rating_df = rating_df[rating_df['rating'] != -1]
+
+# Penggabungan dataset
 merged_df = pd.merge(rating_df, anime_df, on='anime_id', suffixes=('_user', '_anime'))
+
+# Pembersihan kolom genre
 anime_df['genre_cleaned'] = anime_df['genre'].apply(lambda x: ' '.join(x.replace(',', ' ').split()))
+
+# TF-IDF Vectorization
+tfidf = TfidfVectorizer(stop_words='english')
+tfidf_matrix = tfidf.fit_transform(anime_df['genre_cleaned'])
 ```
 
 ## Modeling
 ### Content-based Filtering
 - **Algoritma**: *Cosine Similarity*.
 - **Cara Kerja**:
-  - *TF-IDF Vectorization*: Kolom `genre_cleaned` diubah menjadi matriks *TF-IDF* (12,294 anime, 43 fitur genre).
-  - *Cosine Similarity*: Menghitung kemiripan kosinus antar anime (matriks 12,294 x 12,294).
+  - Menggunakan matriks *TF-IDF* yang telah disiapkan (12,294 anime x 43 fitur genre) untuk menghitung kemiripan kosinus antar anime (matriks 12,294 x 12,294).
   - **Rekomendasi**: Anime dengan skor kemiripan tertinggi direkomendasikan.
 - **Contoh Rekomendasi (Death Note)**:
   ```plaintext
@@ -113,6 +143,7 @@ anime_df['genre_cleaned'] = anime_df['genre'].apply(lambda x: ' '.join(x.replace
   Mousou Dairinin     Drama, Mystery, Police, Psychological, Superna...  TV      7.74 0.967703
   Higurashi no Naku Koro ni Kai Mystery, Psychological, Supernatural, Thriller  TV      8.41 0.879514
   ...
+  ```
 - **Kelebihan**:
   - Tidak memerlukan data rating pengguna lain (*cold-start* friendly).
   - Rekomendasi transparan dan mudah dijelaskan.
@@ -156,10 +187,10 @@ def get_collaborative_recommendations(user_id, num_recommendations=10, df_anime=
 ## Evaluation
 ### Metrik Evaluasi
 1. **RMSE (Root Mean Squared Error)**:
-   - **Formula**: ![alt text](images/image3.png)
+   - **Formula**: `RMSE = sqrt(1/N * Σ(yi - ŷi)²)`
    - **Cara Kerja**: Mengukur rata-rata magnitudo error antara rating aktual dan prediksi. Memberikan bobot lebih pada error besar.
 2. **MAE (Mean Absolute Error)**:
-   - **Formula**: ![alt text](images/image.png)
+   - **Formula**: `MAE = 1/N * Σ|yi - ŷi|`
    - **Cara Kerja**: Mengukur rata-rata nilai absolut error, lebih resisten terhadap *outlier*.
 
 ### Hasil Evaluasi
@@ -181,6 +212,9 @@ def get_collaborative_recommendations(user_id, num_recommendations=10, df_anime=
 
 **Kesimpulan Umum**: SVD memberikan prediksi rating akurat, sementara *Content-based Filtering* menghasilkan rekomendasi tematik yang relevan. Kedua pendekatan saling melengkapi untuk sistem rekomendasi anime yang komprehensif.
 
+**---Ini adalah bagian akhir laporan---**
+
 _Catatan:_  
 - Visualisasi seperti "Distribution of Anime Ratings (excluding -1)" dan "Top 15 Most Frequent Anime Genres" telah disertakan sebagai gambar.  
 - Untuk menjalankan proyek, instal library: `pip install pandas numpy scikit-learn scikit-surprise matplotlib seaborn`, unduh dataset dari [Kaggle](https://www.kaggle.com/datasets/CooperUnion/anime-recommendations-database), simpan di folder `dataset/`, dan jalankan kode di Jupyter Notebook.
+
