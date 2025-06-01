@@ -201,7 +201,6 @@ indices = pd.Series(anime_df.index, index=anime_df['name']).drop_duplicates()
 from surprise import SVD
 algo = SVD(random_state=42)
 algo.fit(trainset)
-# Fungsi get_collaborative_recommendations (seperti di notebook)
 ```
 
 ## Evaluation
@@ -233,7 +232,6 @@ algo.fit(trainset)
 
 **Kesimpulan Umum**: SVD memberikan prediksi rating akurat, sementara *Content-based Filtering* menghasilkan rekomendasi tematik yang relevan. Kedua pendekatan saling melengkapi untuk sistem rekomendasi anime yang komprehensif.
 
-**---Ini adalah bagian akhir laporan---**
 
 _Catatan:_  
 - Visualisasi seperti "Distribution of Anime Ratings (excluding -1)" dan "Top 15 Most Frequent Anime Genres" telah disertakan sebagai gambar.  
