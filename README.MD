@@ -168,8 +168,8 @@ data = Dataset.load_from_df(merged_df[['user_id', 'anime_id', 'rating_user']], r
   - Data rating dimuat ke format *Surprise* (skala 1-10).
   - Model SVD dilatih untuk memfaktorkan matriks rating pengguna-item.
   - **Rekomendasi**: Prediksi rating untuk anime yang belum ditonton, diurutkan berdasarkan prediksi tertinggi.
-- **Contoh Rekomendasi (user_id: 58625)**:
-  Berikut adalah 10 rekomendasi teratas untuk user_id 58625 berdasarkan output notebook:
+- **Contoh Rekomendasi (user_id: 64751)**:
+  Berikut adalah 10 rekomendasi teratas untuk user_id 64751 berdasarkan output notebook:
   | anime_id | Name                                      | Genre                                              | Type | Average Anime Rating | Predicted Rating |
   |----------|-------------------------------------------|----------------------------------------------------|------|----------------------|------------------|
   | 820      | Ginga Eiyuu Densetsu                     | Drama, Military, Sci-Fi, Space                     | OVA  | 9.11                 | 9.342805         |
